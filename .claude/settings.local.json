@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install *)",
+      "Bash(npx vite *)",
+      "Bash(node -e \"const si = require\\('./node_modules/react-icons/si/index.mjs'\\); const keys = Object.keys\\(si\\); const matches = keys.filter\\(k => k.toLowerCase\\(\\).includes\\('css'\\) || k.toLowerCase\\(\\).includes\\('html'\\) || k.toLowerCase\\(\\).includes\\('visual'\\) || k.toLowerCase\\(\\).includes\\('vscode'\\) || k.toLowerCase\\(\\).includes\\('java'\\) && !k.toLowerCase\\(\\).includes\\('javascript'\\) && !k.toLowerCase\\(\\).includes\\('typescript'\\)\\); console.log\\(matches.join\\('\\\\n'\\)\\)\")",
+      "Bash(node -e \"const si = require\\('./node_modules/react-icons/si/index.mjs'\\); const keys = Object.keys\\(si\\); const matches = keys.filter\\(k => k.toLowerCase\\(\\).includes\\('vscode'\\) || \\(k.toLowerCase\\(\\).startsWith\\('sijava'\\) && !k.toLowerCase\\(\\).includes\\('script'\\) && !k.toLowerCase\\(\\).includes\\('type'\\)\\) || k.toLowerCase\\(\\).includes\\('studio'\\)\\); console.log\\(matches.join\\('\\\\n'\\)\\)\")",
+      "Bash(node -e \"const si = require\\('./node_modules/react-icons/si/index.mjs'\\); const keys = Object.keys\\(si\\); console.log\\(keys.filter\\(k => /^SiJava$/.test\\(k\\) || /^SiVs/.test\\(k\\) || k.includes\\('Visualstudio'\\)\\).join\\('\\\\n'\\)\\)\")",
+      "Bash(node -e \"const si = require\\('./node_modules/react-icons/si/index.mjs'\\); const keys = Object.keys\\(si\\); const check = ['SiJavascript','SiTypescript','SiJava','SiGithub','SiGit','SiNpm','SiWordpress','SiBootstrap','SiSass','SiAngular','SiReact','SiFirebase']; check.forEach\\(k => console.log\\(k + ': ' + \\(keys.includes\\(k\\) ? 'OK' : 'MISSING'\\)\\)\\)\")"
+    ]
+  }
+}
