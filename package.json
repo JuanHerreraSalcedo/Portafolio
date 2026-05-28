@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "cd dist && git init && git add -A && git commit -m \"Deploy to GitHub Pages\" && git push --force https://github.com/JuanHerreraSalcedo/Portafolio.git HEAD:gh-pages"
   },
   "dependencies": {
     "framer-motion": "^11.3.0",
@@ -17,6 +19,7 @@
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.1",
     "autoprefixer": "^10.4.20",
+    "gh-pages": "^6.3.0",
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.14",
     "vite": "^5.4.8"
