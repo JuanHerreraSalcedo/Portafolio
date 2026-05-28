@@ -104,7 +104,7 @@ export default function About() {
                     </div>
                   ) : (
                     <img
-                      src="/profile.png"
+                      src={import.meta.env.BASE_URL + 'profile.png'}
                       alt="Juan Camilo Herrera Salcedo"
                       className="w-full h-full object-cover"
                       onError={() => setImgError(true)}

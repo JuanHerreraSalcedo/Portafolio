@@ -99,7 +99,7 @@ function ProjectImage({ project, statusLabel, internalLabel, featuredLabel, aiLa
     <div className={`h-48 relative overflow-hidden bg-gradient-to-br ${project.gradient} bg-[#0D0D18]`}>
       {project.image && !imgError ? (
         <img
-          src={project.image}
+          src={import.meta.env.BASE_URL + project.image.slice(1)}
           alt={project.title}
           className="w-full h-full object-cover opacity-75 group-hover:opacity-95 group-hover:scale-105 transition-all duration-500"
           onError={() => setImgError(true)}
