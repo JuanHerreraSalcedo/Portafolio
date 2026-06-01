@@ -3,7 +3,6 @@ import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import About from './components/About'
 import TechStack from './components/TechStack'
-import Metrics from './components/Metrics'
 import Projects from './components/Projects'
 import Skills from './components/Skills'
 import Contact from './components/Contact'
@@ -18,7 +17,6 @@ function App() {
           <Hero />
           <About />
           <TechStack />
-          <Metrics />
           <Projects />
           <Skills />
           <Contact />

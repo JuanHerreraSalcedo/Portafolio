@@ -51,13 +51,7 @@ export default function About() {
 
             {/* Paragraph 2 */}
             <p className="text-[#94A3B8] text-lg leading-relaxed">
-              {t.about.bio2pre}{' '}
-              <span className="text-[#FF6B35] font-semibold">Groundwork/SEOMarketing</span>
-              {t.about.bio2cont}{' '}
-              <span className="text-[#F1F5F9] font-bold">{t.about.bio2leads}</span>{' '}
-              {t.about.bio2for}{' '}
-              <span className="text-[#F1F5F9] font-bold">{t.about.bio2clients}</span>
-              {t.about.bio2end}
+              {t.about.bio2}
             </p>
 
             {/* Paragraph 3 */}
