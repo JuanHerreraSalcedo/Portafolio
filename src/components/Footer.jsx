@@ -1,93 +1,104 @@
-import { motion } from 'framer-motion'
-import { FiGithub, FiLinkedin, FiHeart } from 'react-icons/fi'
-import { useLanguage } from '../context/LanguageContext'
+import { FaGithub, FaLinkedin } from 'react-icons/fa6'
 
 const socialLinks = [
-  {
-    Icon: FiGithub,
-    href: 'https://github.com/JuanHerreraSalcedo',
-    label: 'GitHub',
-    hoverClass: 'hover:text-[#F1F5F9] hover:border-white/20',
-  },
-  {
-    Icon: FiLinkedin,
-    href: 'https://www.linkedin.com/in/juan-camilo-herrera-salcedo-aa7147258/',
-    label: 'LinkedIn',
-    hoverClass: 'hover:text-indigo-400 hover:border-indigo-500/40',
-  },
+  { label: 'GitHub',   href: 'https://github.com/JuanHerreraSalcedo',                                  Icon: FaGithub   },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/juan-camilo-herrera-salcedo-aa7147258/',     Icon: FaLinkedin },
+  { label: 'Email',    href: 'mailto:juank.hs5500@gmail.com',                                           Icon: null       },
 ]
 
-export default function Footer() {
-  const { t } = useLanguage()
+function WavyLink({ label, href, Icon }) {
   return (
-    <footer className="bg-[#111118] border-t border-white/5">
-      {/* Top accent line */}
-      <div className="h-px bg-gradient-to-r from-transparent via-indigo-500/30 to-transparent" />
+    <a
+      href={href}
+      target={href.startsWith('mailto') ? undefined : '_blank'}
+      rel="noopener noreferrer"
+      className="wavy-underline-white"
+      style={{
+        fontFamily: 'Inter, sans-serif',
+        fontWeight: 400,
+        fontSize: '1rem',
+        color: '#000',
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: '0.5rem',
+        letterSpacing: '-0.01em',
+        textDecoration: 'none',
+      }}
+    >
+      {Icon && <Icon size={16} style={{ flexShrink: 0 }} />}
+      {label}
+    </a>
+  )
+}
 
-      <div className="max-w-7xl mx-auto px-4 py-14">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-          {/* Brand */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="flex flex-col items-center md:items-start gap-2"
-          >
-            <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center font-black text-sm text-white shadow-lg shadow-indigo-500/25">
-                JH
-              </div>
-              <span className="font-bold text-[#F1F5F9]">Juan Camilo Herrera Salcedo</span>
-            </div>
-            <p className="text-[#94A3B8] text-sm">
-              {t.footer.role}
-            </p>
-            <p className="text-[#94A3B8]/60 text-xs mt-1">
-              © 2026 — {t.footer.rights}
-            </p>
-          </motion.div>
+export default function Footer() {
+  return (
+    <footer style={{ background: '#fafafa', color: '#000', padding: '5rem 1.5rem 3rem' }}>
+      <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
 
-          {/* Built with badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#1A1A2E] border border-white/5 text-xs text-[#94A3B8]"
-          >
-            {t.footer.builtWith}
-            <span className="text-[#61DAFB] font-semibold">React</span>
-            <span className="text-white/20">·</span>
-            <span className="text-[#FFB224] font-semibold">Vite</span>
-            <span className="text-white/20">·</span>
-            <span className="text-[#06B6D4] font-semibold">Tailwind</span>
-            <FiHeart size={11} className="text-red-400 fill-red-400" />
-          </motion.div>
+        {/* "START A PROJECT" */}
+        <button
+          onClick={() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })}
+          style={{
+            display: 'block',
+            width: '100%',
+            fontFamily: '"Playfair Display", serif',
+            fontWeight: 900,
+            fontSize: '12vw',
+            textTransform: 'uppercase',
+            letterSpacing: '-0.03em',
+            lineHeight: 1,
+            color: '#000',
+            background: 'none',
+            border: 'none',
+            borderBottom: '1px solid #000',
+            paddingBottom: '2rem',
+            marginBottom: '4rem',
+            cursor: 'pointer',
+            textAlign: 'left',
+          }}
+        >
+          START A PROJECT
+        </button>
 
-          {/* Social links */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="flex items-center gap-3"
-          >
-            {socialLinks.map(({ Icon, href, label, hoverClass }) => (
-              <motion.a
-                key={label}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={label}
-                className={`w-10 h-10 rounded-xl bg-[#1A1A2E] border border-white/5 flex items-center justify-center text-[#94A3B8] ${hoverClass} transition-all duration-200`}
-              >
-                <Icon size={17} />
-              </motion.a>
+        {/* 3-column grid */}
+        <div
+          style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '2rem', alignItems: 'end' }}
+          className="!grid-cols-1 md:!grid-cols-3"
+        >
+          {/* Col 1 — Social links with icons */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+            {socialLinks.map(({ label, href, Icon }) => (
+              <WavyLink key={label} label={label} href={href} Icon={Icon} />
             ))}
-          </motion.div>
+          </div>
+
+          {/* Col 2 — Email large */}
+          <div>
+            <p
+              style={{
+                fontFamily: 'Inter, sans-serif',
+                fontWeight: 500,
+                fontSize: 'clamp(1rem, 2.5vw, 1.875rem)',
+                color: '#000',
+                margin: 0,
+                letterSpacing: '-0.02em',
+                wordBreak: 'break-all',
+              }}
+            >
+              juank.hs5500@gmail.com
+            </p>
+          </div>
+
+          {/* Col 3 — Rights */}
+          <div style={{ textAlign: 'right' }}>
+            <p style={{ fontFamily: '"Courier New", Courier, monospace', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '2px', color: '#888', margin: '0 0 0.25rem' }}>
+              © 2026 Juan Camilo Herrera Salcedo
+            </p>
+            <p style={{ fontFamily: '"Courier New", Courier, monospace', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '2px', color: '#888', margin: 0 }}>
+              Cali, Colombia
+            </p>
+          </div>
         </div>
       </div>
     </footer>

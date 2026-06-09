@@ -8,7 +8,8 @@
       "Bash(node -e \"const si = require\\('./node_modules/react-icons/si/index.mjs'\\); const keys = Object.keys\\(si\\); console.log\\(keys.filter\\(k => /^SiJava$/.test\\(k\\) || /^SiVs/.test\\(k\\) || k.includes\\('Visualstudio'\\)\\).join\\('\\\\n'\\)\\)\")",
       "Bash(node -e \"const si = require\\('./node_modules/react-icons/si/index.mjs'\\); const keys = Object.keys\\(si\\); const check = ['SiJavascript','SiTypescript','SiJava','SiGithub','SiGit','SiNpm','SiWordpress','SiBootstrap','SiSass','SiAngular','SiReact','SiFirebase']; check.forEach\\(k => console.log\\(k + ': ' + \\(keys.includes\\(k\\) ? 'OK' : 'MISSING'\\)\\)\\)\")",
       "Bash(npm run *)",
-      "Bash(git config *)"
+      "Bash(git config *)",
+      "Bash(node -e ' *)"
     ]
   }
 }

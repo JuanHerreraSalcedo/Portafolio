@@ -1,36 +1,31 @@
 import { useState, useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
-import {
-  FiSend,
-  FiUser,
-  FiMail,
-  FiTag,
-  FiMessageSquare,
-  FiCheckCircle,
-  FiAlertCircle,
-} from 'react-icons/fi'
+import { FiCheckCircle, FiAlertCircle } from 'react-icons/fi'
 import { useLanguage } from '../context/LanguageContext'
 
 const FORMSPREE_URL = 'https://formspree.io/f/YOUR_ID_HERE'
 
-const inputClass =
-  'w-full bg-[#0A0A0F] border border-white/10 rounded-xl px-4 py-3 text-[#F1F5F9] placeholder-[#94A3B8]/50 text-sm transition-all duration-200 outline-none focus:border-indigo-500/70 focus:ring-2 focus:ring-indigo-500/15 hover:border-white/20'
+const fieldStyle = {
+  width: '100%',
+  fontFamily: 'Inter, sans-serif',
+  fontWeight: 300,
+  fontSize: '1rem',
+  color: '#000',
+  background: 'transparent',
+  border: 'none',
+  borderBottom: '1px solid #000',
+  outline: 'none',
+  padding: '0.75rem 0',
+  borderRadius: 0,
+}
 
-function Field({ label, icon: Icon, children }) {
+function Field({ label, children }) {
   return (
-    <div className="space-y-1.5">
-      <label className="text-xs font-semibold text-[#94A3B8] uppercase tracking-wider">
+    <div style={{ marginBottom: '2rem' }}>
+      <p style={{ fontFamily: '"Courier New", Courier, monospace', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '2px', color: '#888', marginBottom: '0.5rem' }}>
         {label}
-      </label>
-      <div className="relative">
-        {Icon && (
-          <Icon
-            size={14}
-            className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#94A3B8]/50 pointer-events-none"
-          />
-        )}
-        {children}
-      </div>
+      </p>
+      {children}
     </div>
   )
 }
@@ -39,26 +34,22 @@ export default function Contact() {
   const { t } = useLanguage()
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-80px' })
-
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
-  const [status, setStatus] = useState('idle') // 'idle' | 'loading' | 'success' | 'error'
+  const [status, setStatus] = useState('idle')
   const [errorMsg, setErrorMsg] = useState('')
 
-  const handleChange = (e) =>
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+  const handleChange = (e) => setForm((p) => ({ ...p, [e.target.name]: e.target.value }))
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setStatus('loading')
     setErrorMsg('')
-
     try {
       const res = await fetch(FORMSPREE_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify(form),
       })
-
       if (res.ok) {
         setStatus('success')
         setForm({ name: '', email: '', subject: '', message: '' })
@@ -74,175 +65,99 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact" className="py-28 px-4 bg-[#111118] relative overflow-hidden" ref={ref}>
-      {/* Ambient blobs */}
-      <div className="absolute top-0 left-1/4 w-[500px] h-80 bg-indigo-600/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-violet-600/5 rounded-full blur-[100px] pointer-events-none" />
-
-      <div className="max-w-2xl mx-auto">
-        {/* Header */}
+    <section
+      id="contact"
+      style={{ background: '#fafafa', color: '#000', padding: '6rem 1.5rem' }}
+      ref={ref}
+    >
+      <div style={{ maxWidth: '720px', margin: '0 auto' }}>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          style={{ marginBottom: '4rem' }}
         >
-          <span className="text-indigo-400 font-semibold text-sm uppercase tracking-[0.15em]">
-            {t.contact.label}
-          </span>
-          <h2 className="text-4xl sm:text-5xl font-black mt-3 text-[#F1F5F9]">{t.contact.title}</h2>
-          <p className="text-[#94A3B8] mt-4 text-base max-w-sm mx-auto">
+          <h2
+            style={{
+              fontFamily: '"Playfair Display", serif',
+              fontSize: '8vw',
+              letterSpacing: '-0.03em',
+              lineHeight: 1,
+              margin: '0 0 1rem',
+            }}
+          >
+            <span style={{ fontWeight: 900 }}>GET IN </span>
+            <span style={{ fontWeight: 100, fontStyle: 'italic' }}>Touch</span>
+          </h2>
+          <p style={{ fontFamily: 'Inter, sans-serif', fontWeight: 300, fontSize: '1.25rem', color: '#888', margin: 0 }}>
             {t.contact.subtitle}
           </p>
         </motion.div>
 
-        {/* Card */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.15 }}
-          className="relative rounded-2xl bg-[#1A1A2E] border border-white/5 overflow-hidden"
+          transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
         >
-          {/* Top accent line */}
-          <div className="h-[2px] bg-gradient-to-r from-transparent via-indigo-500/60 to-transparent" />
-
-          <div className="p-8 sm:p-10">
-            {/* ── SUCCESS STATE ── */}
-            {status === 'success' ? (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.92 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.4 }}
-                className="flex flex-col items-center justify-center gap-4 py-14 text-center"
+          {status === 'success' ? (
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', padding: '4rem 0', textAlign: 'center' }}>
+              <FiCheckCircle size={32} color="#000" />
+              <h3 style={{ fontFamily: '"Playfair Display", serif', fontWeight: 900, fontSize: '1.5rem', margin: 0 }}>{t.contact.successTitle}</h3>
+              <p style={{ fontFamily: 'Inter, sans-serif', fontWeight: 300, color: '#888' }}>{t.contact.successSub}</p>
+              <button
+                onClick={() => setStatus('idle')}
+                style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400, fontSize: '0.875rem', color: '#000', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline', textUnderlineOffset: '3px' }}
               >
-                <motion.div
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ type: 'spring', stiffness: 260, damping: 20, delay: 0.1 }}
-                  className="w-16 h-16 rounded-2xl bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center"
-                >
-                  <FiCheckCircle size={28} className="text-emerald-400" />
-                </motion.div>
-                <div>
-                  <h3 className="text-xl font-bold text-[#F1F5F9]">{t.contact.successTitle}</h3>
-                  <p className="text-[#94A3B8] mt-1">{t.contact.successSub}</p>
-                </div>
-                <button
-                  onClick={() => setStatus('idle')}
-                  className="mt-2 text-sm text-indigo-400 hover:text-indigo-300 transition-colors font-medium underline underline-offset-4"
-                >
-                  {t.contact.sendAnother}
-                </button>
-              </motion.div>
-            ) : (
-              /* ── FORM ── */
-              <form onSubmit={handleSubmit} noValidate className="space-y-5">
-                {/* Name + Email */}
-                <div className="grid sm:grid-cols-2 gap-5">
-                  <Field label={t.contact.name} icon={FiUser}>
-                    <input
-                      type="text"
-                      name="name"
-                      value={form.name}
-                      onChange={handleChange}
-                      required
-                      placeholder={t.contact.namePlaceholder}
-                      className={`${inputClass} pl-9`}
-                    />
-                  </Field>
-                  <Field label={t.contact.email} icon={FiMail}>
-                    <input
-                      type="email"
-                      name="email"
-                      value={form.email}
-                      onChange={handleChange}
-                      required
-                      placeholder="your@email.com"
-                      className={`${inputClass} pl-9`}
-                    />
-                  </Field>
-                </div>
-
-                {/* Subject */}
-                <Field label={t.contact.subject} icon={FiTag}>
-                  <input
-                    type="text"
-                    name="subject"
-                    value={form.subject}
-                    onChange={handleChange}
-                    required
-                    placeholder={t.contact.subjectPlaceholder}
-                    className={`${inputClass} pl-9`}
-                  />
+                {t.contact.sendAnother}
+              </button>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} noValidate>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 2rem' }} className="!grid-cols-1 sm:!grid-cols-2">
+                <Field label={t.contact.name}>
+                  <input type="text" name="name" value={form.name} onChange={handleChange} required placeholder={t.contact.namePlaceholder} style={fieldStyle} />
                 </Field>
-
-                {/* Message */}
-                <Field label={t.contact.message} icon={null}>
-                  <textarea
-                    name="message"
-                    value={form.message}
-                    onChange={handleChange}
-                    required
-                    rows={5}
-                    placeholder={t.contact.messagePlaceholder}
-                    className={`${inputClass} resize-none`}
-                  />
+                <Field label={t.contact.email}>
+                  <input type="email" name="email" value={form.email} onChange={handleChange} required placeholder="your@email.com" style={fieldStyle} />
                 </Field>
+              </div>
+              <Field label={t.contact.subject}>
+                <input type="text" name="subject" value={form.subject} onChange={handleChange} required placeholder={t.contact.subjectPlaceholder} style={fieldStyle} />
+              </Field>
+              <Field label={t.contact.message}>
+                <textarea name="message" value={form.message} onChange={handleChange} required rows={5} placeholder={t.contact.messagePlaceholder} style={{ ...fieldStyle, resize: 'none' }} />
+              </Field>
 
-                {/* Error banner */}
-                {status === 'error' && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -6 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="flex items-start gap-2.5 p-3.5 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm"
-                  >
-                    <FiAlertCircle size={15} className="shrink-0 mt-0.5" />
-                    {errorMsg}
-                  </motion.div>
-                )}
+              {status === 'error' && (
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem', color: '#ef4444', fontFamily: 'Inter, sans-serif', fontSize: '0.875rem' }}>
+                  <FiAlertCircle size={14} /> {errorMsg}
+                </div>
+              )}
 
-                {/* Submit */}
-                <motion.button
-                  type="submit"
-                  disabled={status === 'loading'}
-                  whileHover={{ scale: status === 'loading' ? 1 : 1.02 }}
-                  whileTap={{ scale: status === 'loading' ? 1 : 0.97 }}
-                  className="w-full flex items-center justify-center gap-2.5 px-6 py-3.5 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold rounded-xl transition-colors duration-200 shadow-lg shadow-indigo-500/25"
-                >
-                  {status === 'loading' ? (
-                    <>
-                      <svg
-                        className="animate-spin h-4 w-4 shrink-0"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        aria-hidden="true"
-                      >
-                        <circle
-                          className="opacity-25"
-                          cx="12"
-                          cy="12"
-                          r="10"
-                          stroke="currentColor"
-                          strokeWidth="4"
-                        />
-                        <path
-                          className="opacity-75"
-                          fill="currentColor"
-                          d="M4 12a8 8 0 018-8v8z"
-                        />
-                      </svg>
-                      {t.contact.sending}
-                    </>
-                  ) : (
-                    <>
-                      <FiSend size={15} />
-                      {t.contact.submit}
-                    </>
-                  )}
-                </motion.button>
-              </form>
-            )}
-          </div>
+              <button
+                type="submit"
+                disabled={status === 'loading'}
+                style={{
+                  fontFamily: 'Inter, sans-serif',
+                  fontWeight: 500,
+                  fontSize: '1rem',
+                  color: '#fff',
+                  background: '#000',
+                  border: 'none',
+                  borderRadius: 0,
+                  padding: '1rem 2rem',
+                  cursor: status === 'loading' ? 'not-allowed' : 'pointer',
+                  opacity: status === 'loading' ? 0.6 : 1,
+                  transition: 'background 0.2s, color 0.2s',
+                  letterSpacing: '-0.01em',
+                }}
+                onMouseEnter={(e) => { if (status !== 'loading') { e.currentTarget.style.background = '#e5e5e5'; e.currentTarget.style.color = '#000' } }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = '#000'; e.currentTarget.style.color = '#fff' }}
+              >
+                {status === 'loading' ? t.contact.sending : t.contact.submit}
+              </button>
+            </form>
+          )}
         </motion.div>
       </div>
     </section>

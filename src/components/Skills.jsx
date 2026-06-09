@@ -3,48 +3,58 @@ import { motion, useInView } from 'framer-motion'
 import { useLanguage } from '../context/LanguageContext'
 
 const frontendSkills = [
-  { name: 'HTML / CSS', level: 90 },
-  { name: 'JavaScript', level: 80 },
-  { name: 'WordPress', level: 85 },
+  { name: 'HTML / CSS',           level: 90 },
+  { name: 'JavaScript',           level: 80 },
+  { name: 'WordPress',            level: 85 },
   { name: 'Angular / TypeScript', level: 75 },
-  { name: 'React', level: 65 },
+  { name: 'React',                level: 65 },
 ]
 
 const automationSkills = [
-  { name: 'Make.com', level: 80 },
+  { name: 'Make.com',         level: 80 },
   { name: 'API Integrations', level: 70 },
-  { name: 'Workflow Architecture', level: 65 },
-  { name: 'n8n', level: 55 },
+  { name: 'Workflow Design',  level: 65 },
+  { name: 'n8n',              level: 55 },
 ]
 
-function SkillBar({ skill, index, inView, gradient }) {
+function SkillBar({ skill, index, isInView }) {
   return (
-    <div className="space-y-2">
-      <div className="flex justify-between items-center">
-        <span className="text-[#F1F5F9] font-medium text-sm">{skill.name}</span>
+    <div style={{ marginBottom: '1.75rem' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+        <span
+          style={{
+            fontFamily: '"Courier New", Courier, monospace',
+            fontSize: '12px',
+            textTransform: 'uppercase',
+            letterSpacing: '2px',
+            color: '#888',
+          }}
+        >
+          {skill.name}
+        </span>
         <motion.span
           initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : { opacity: 0 }}
-          transition={{ delay: 0.3 + index * 0.1, duration: 0.4 }}
-          className="text-[#94A3B8] text-sm font-semibold tabular-nums"
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ delay: 0.3 + index * 0.1 }}
+          style={{
+            fontFamily: 'Inter, sans-serif',
+            fontWeight: 300,
+            fontSize: '0.9rem',
+            color: '#e5e5e5',
+          }}
         >
           {skill.level}%
         </motion.span>
       </div>
-      <div className="h-2 rounded-full bg-white/5 overflow-hidden">
+      {/* Track */}
+      <div style={{ height: '1px', background: 'rgba(255,255,255,0.1)', position: 'relative' }}>
+        {/* Fill */}
         <motion.div
           initial={{ width: 0 }}
-          animate={inView ? { width: `${skill.level}%` } : { width: 0 }}
-          transition={{
-            duration: 1.2,
-            delay: 0.2 + index * 0.1,
-            ease: [0.25, 0.46, 0.45, 0.94],
-          }}
-          className={`h-full rounded-full ${gradient} relative`}
-        >
-          {/* Shimmer */}
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 translate-x-[-100%] group-hover:translate-x-[200%] transition-transform duration-1000" />
-        </motion.div>
+          animate={isInView ? { width: `${skill.level}%` } : {}}
+          transition={{ duration: 1.4, delay: 0.2 + index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+          style={{ position: 'absolute', top: 0, left: 0, height: '100%', background: '#e5e5e5' }}
+        />
       </div>
     </div>
   )
@@ -56,87 +66,63 @@ export default function Skills() {
   const isInView = useInView(ref, { once: true, margin: '-80px' })
 
   return (
-    <section id="skills" className="py-28 px-4 relative overflow-hidden" ref={ref}>
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-indigo-600/5 rounded-full blur-[100px] pointer-events-none" />
-
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
+    <section
+      id="skills"
+      style={{ background: '#09090b', color: '#fff', padding: '6rem 1.5rem' }}
+      ref={ref}
+    >
+      <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-20"
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          style={{ marginBottom: '4rem' }}
         >
-          <span className="text-indigo-400 font-semibold text-sm uppercase tracking-[0.15em]">
-            {t.skills.label}
-          </span>
-          <h2 className="text-4xl sm:text-5xl font-black mt-3 text-[#F1F5F9]">{t.skills.title}</h2>
-          <p className="text-[#94A3B8] mt-4 text-base max-w-md mx-auto">
-            {t.skills.subtitle}
-          </p>
+          <h2
+            style={{
+              fontFamily: '"Playfair Display", serif',
+              fontSize: '8vw',
+              letterSpacing: '-0.03em',
+              lineHeight: 1,
+              margin: 0,
+              color: '#e5e5e5',
+            }}
+          >
+            <span style={{ fontWeight: 900 }}>SKILLS </span>
+            <span style={{ fontWeight: 100, fontStyle: 'italic' }}>&amp; Expertise</span>
+          </h2>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-8">
-          {/* Frontend card */}
+        <div
+          style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem' }}
+          className="!grid-cols-1 md:!grid-cols-2"
+        >
+          {/* Frontend */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
+            initial={{ opacity: 0, x: -20 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="group p-8 rounded-2xl bg-[#1A1A2E] border border-white/5 hover:border-white/10 transition-all duration-300 hover:shadow-xl hover:shadow-black/20"
+            transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           >
-            {/* Card header */}
-            <div className="flex items-center gap-3 mb-8">
-              <div className="w-10 h-10 rounded-xl bg-indigo-500/15 border border-indigo-500/20 flex items-center justify-center">
-                <span className="text-indigo-400 text-lg font-black">{'</>'}</span>
-              </div>
-              <div>
-                <h3 className="font-bold text-[#F1F5F9]">{t.skills.frontend}</h3>
-                <p className="text-xs text-[#94A3B8] mt-0.5">{t.skills.frontendSub}</p>
-              </div>
-            </div>
-
-            <div className="space-y-6">
-              {frontendSkills.map((skill, i) => (
-                <SkillBar
-                  key={skill.name}
-                  skill={skill}
-                  index={i}
-                  inView={isInView}
-                  gradient="bg-gradient-to-r from-indigo-500 to-violet-500"
-                />
-              ))}
-            </div>
+            <p style={{ fontFamily: '"Courier New", Courier, monospace', fontSize: '14px', textTransform: 'uppercase', letterSpacing: '2px', color: '#888', marginBottom: '2rem' }}>
+              Frontend Development
+            </p>
+            {frontendSkills.map((s, i) => (
+              <SkillBar key={s.name} skill={s} index={i} isInView={isInView} />
+            ))}
           </motion.div>
 
-          {/* Automation card */}
+          {/* Automation */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
+            initial={{ opacity: 0, x: 20 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="group p-8 rounded-2xl bg-[#1A1A2E] border border-white/5 hover:border-white/10 transition-all duration-300 hover:shadow-xl hover:shadow-black/20"
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           >
-            {/* Card header */}
-            <div className="flex items-center gap-3 mb-8">
-              <div className="w-10 h-10 rounded-xl bg-[#FF6B35]/15 border border-[#FF6B35]/20 flex items-center justify-center">
-                <span className="text-[#FF6B35] text-lg font-black">⚡</span>
-              </div>
-              <div>
-                <h3 className="font-bold text-[#F1F5F9]">{t.skills.automation}</h3>
-                <p className="text-xs text-[#94A3B8] mt-0.5">{t.skills.automationSub}</p>
-              </div>
-            </div>
-
-            <div className="space-y-6">
-              {automationSkills.map((skill, i) => (
-                <SkillBar
-                  key={skill.name}
-                  skill={skill}
-                  index={i}
-                  inView={isInView}
-                  gradient="bg-gradient-to-r from-[#FF6B35] to-orange-400"
-                />
-              ))}
-            </div>
+            <p style={{ fontFamily: '"Courier New", Courier, monospace', fontSize: '14px', textTransform: 'uppercase', letterSpacing: '2px', color: '#888', marginBottom: '2rem' }}>
+              Automation &amp; AI
+            </p>
+            {automationSkills.map((s, i) => (
+              <SkillBar key={s.name} skill={s} index={i} isInView={isInView} />
+            ))}
           </motion.div>
         </div>
       </div>
