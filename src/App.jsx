@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { motion, useReducedMotion } from 'framer-motion'
+import { useReducedMotion } from 'framer-motion'
 import { LanguageProvider } from './context/LanguageContext'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
@@ -28,6 +28,9 @@ function GrainOverlay() {
   )
 }
 
+// Detect touch-only devices — no mouse, so no custom cursor
+const isTouch = typeof window !== 'undefined' && ('ontouchstart' in window || navigator.maxTouchPoints > 0)
+
 function CustomCursor() {
   const prefersReduced = useReducedMotion()
   const [pos, setPos] = useState({ x: -100, y: -100 })
@@ -37,18 +40,11 @@ function CustomCursor() {
   const current = useRef({ x: -100, y: -100 })
 
   useEffect(() => {
-    if (prefersReduced) return
+    if (prefersReduced || isTouch) return
 
-    const onMove = (e) => {
-      target.current = { x: e.clientX, y: e.clientY }
-    }
-
-    const onEnter = (e) => {
-      if (e.target.closest('a, button, [role="button"]')) setHovered(true)
-    }
-    const onLeave = (e) => {
-      if (e.target.closest('a, button, [role="button"]')) setHovered(false)
-    }
+    const onMove = (e) => { target.current = { x: e.clientX, y: e.clientY } }
+    const onEnter = (e) => { if (e.target.closest('a, button, [role="button"]')) setHovered(true) }
+    const onLeave = (e) => { if (e.target.closest('a, button, [role="button"]')) setHovered(false) }
 
     const loop = () => {
       const ease = 0.18
@@ -71,9 +67,7 @@ function CustomCursor() {
     }
   }, [prefersReduced])
 
-  if (prefersReduced) return null
-
-  const size = hovered ? 40 : 10
+  if (prefersReduced || isTouch) return null
 
   return (
     <div
@@ -81,8 +75,8 @@ function CustomCursor() {
         position: 'fixed',
         left: pos.x,
         top: pos.y,
-        width: size,
-        height: size,
+        width: hovered ? 40 : 10,
+        height: hovered ? 40 : 10,
         borderRadius: '50%',
         background: '#fff',
         mixBlendMode: 'difference',
@@ -100,7 +94,15 @@ function App() {
     <LanguageProvider>
       <GrainOverlay />
       <CustomCursor />
-      <div className="font-inter overflow-x-hidden" style={{ background: '#000', color: '#fff', cursor: 'none' }}>
+      <div
+        className="font-inter overflow-x-hidden"
+        style={{
+          background: '#000',
+          color: '#fff',
+          // Only hide system cursor on non-touch devices
+          cursor: isTouch ? 'auto' : 'none',
+        }}
+      >
         <Navbar />
         <main>
           <Hero />

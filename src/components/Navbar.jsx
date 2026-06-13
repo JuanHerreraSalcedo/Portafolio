@@ -4,16 +4,16 @@ import { FiMenu, FiX } from 'react-icons/fi'
 import { useLanguage } from '../context/LanguageContext'
 
 export default function Navbar() {
-  const { lang, setLang } = useLanguage()
+  const { lang, setLang, t } = useLanguage()
   const [mobileOpen, setMobileOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const prefersReduced = useReducedMotion()
 
   const navLinks = [
-    { label: 'About',   href: '#about'    },
-    { label: 'Work',    href: '#projects' },
-    { label: 'Stack',   href: '#stack'    },
-    { label: 'Contact', href: '#contact'  },
+    { label: t.nav.about,   href: '#about'    },
+    { label: t.nav.work,    href: '#projects' },
+    { label: t.nav.stack,   href: '#stack'    },
+    { label: t.nav.contact, href: '#contact'  },
   ]
 
   useEffect(() => {

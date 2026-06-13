@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react'
 import { motion, useInView, useReducedMotion } from 'framer-motion'
+import { useLanguage } from '../context/LanguageContext'
 import {
   FaHtml5, FaCss3Alt, FaReact, FaWordpress, FaGit, FaGithub,
   FaJava, FaDocker, FaServer,
@@ -42,7 +43,7 @@ const automationTech = [
 ]
 
 const gridVariants = {
-  hidden: {},
+  hidden:  {},
   visible: { transition: { staggerChildren: 0.06 } },
 }
 const itemVariants = {
@@ -50,26 +51,26 @@ const itemVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } },
 }
 
-function TechItem({ name, Icon, color, dark }) {
+function TechItem({ name, Icon, color }) {
   const [hovered, setHovered] = useState(false)
   return (
     <motion.div
       variants={itemVariants}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', cursor: 'default', padding: '1rem 0.5rem', borderBottom: dark ? '1px solid rgba(255,255,255,0.06)' : '1px solid rgba(0,0,0,0.06)' }}
+      style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', cursor: 'default', padding: '1rem 0.5rem', borderBottom: '1px solid rgba(0,0,0,0.06)' }}
     >
       <div style={{ transition: 'transform 0.2s ease, filter 0.2s ease', transform: hovered ? 'scale(1.1)' : 'scale(1)', filter: hovered ? 'brightness(1.3)' : 'brightness(1)', width: 32, height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <Icon size={28} style={{ color }} />
       </div>
-      <span style={{ fontFamily: '"Courier New", Courier, monospace', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', color: dark ? (hovered ? '#e5e5e5' : '#888') : (hovered ? '#000' : '#888'), transition: 'color 0.2s ease', textAlign: 'center', whiteSpace: 'nowrap' }}>
+      <span style={{ fontFamily: '"Courier New", Courier, monospace', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', color: hovered ? '#000' : '#888', transition: 'color 0.2s ease', textAlign: 'center', whiteSpace: 'nowrap' }}>
         {name}
       </span>
     </motion.div>
   )
 }
 
-function TechGroup({ label, items, delay, isInView, dark }) {
+function TechGroup({ label, items, delay, isInView }) {
   const prefersReduced = useReducedMotion()
   return (
     <div style={{ marginBottom: '4rem' }}>
@@ -77,7 +78,7 @@ function TechGroup({ label, items, delay, isInView, dark }) {
         initial={{ opacity: 0, x: -16 }}
         animate={isInView ? { opacity: 1, x: 0 } : {}}
         transition={{ duration: prefersReduced ? 0 : 0.6, delay: prefersReduced ? 0 : delay, ease: [0.16, 1, 0.3, 1] }}
-        style={{ fontFamily: '"Courier New", Courier, monospace', fontSize: '14px', textTransform: 'uppercase', letterSpacing: '2px', color: '#888', marginBottom: '1.5rem', borderTop: dark ? '1px solid rgba(255,255,255,0.1)' : '1px solid #000', paddingTop: '1.25rem' }}
+        style={{ fontFamily: '"Courier New", Courier, monospace', fontSize: '14px', textTransform: 'uppercase', letterSpacing: '2px', color: '#888', marginBottom: '1.5rem', borderTop: '1px solid #000', paddingTop: '1.25rem' }}
       >
         {label}
       </motion.p>
@@ -87,13 +88,14 @@ function TechGroup({ label, items, delay, isInView, dark }) {
         animate={isInView ? 'visible' : 'hidden'}
         style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(80px, 1fr))' }}
       >
-        {items.map((tech) => <TechItem key={tech.name} {...tech} dark={dark} />)}
+        {items.map((tech) => <TechItem key={tech.name} {...tech} />)}
       </motion.div>
     </div>
   )
 }
 
 export default function TechStack() {
+  const { t } = useLanguage()
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-100px' })
   const prefersReduced = useReducedMotion()
@@ -113,8 +115,8 @@ export default function TechStack() {
           </h2>
         </motion.div>
 
-        <TechGroup label="Frontend &amp; Tools" items={frontendTech} delay={0.1} isInView={isInView} dark={false} />
-        <TechGroup label="Automation &amp; AI"  items={automationTech} delay={0.2} isInView={isInView} dark={false} />
+        <TechGroup label={t.stack.frontend}   items={frontendTech}   delay={0.1} isInView={isInView} />
+        <TechGroup label={t.stack.automation} items={automationTech} delay={0.2} isInView={isInView} />
       </div>
     </section>
   )

@@ -18,7 +18,7 @@ const automationSkills = [
 ]
 
 const groupVariants = {
-  hidden: {},
+  hidden:  {},
   visible: { transition: { staggerChildren: 0.1 } },
 }
 const barVariants = {
@@ -59,7 +59,7 @@ function SkillGroup({ label, skills, delay, isInView }) {
   const prefersReduced = useReducedMotion()
   return (
     <motion.div
-      initial={{ opacity: 0, x: 0, y: 30 }}
+      initial={{ opacity: 0, y: 30 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: prefersReduced ? 0 : 0.8, delay: prefersReduced ? 0 : delay, ease: [0.16, 1, 0.3, 1] }}
     >
@@ -99,8 +99,8 @@ export default function Skills() {
         </motion.div>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem' }} className="!grid-cols-1 md:!grid-cols-2">
-          <SkillGroup label="Frontend Development" skills={frontendSkills}   delay={0.1} isInView={isInView} />
-          <SkillGroup label="Automation &amp; AI"  skills={automationSkills} delay={0.2} isInView={isInView} />
+          <SkillGroup label={t.skills.frontend}   skills={frontendSkills}   delay={0.1} isInView={isInView} />
+          <SkillGroup label={t.skills.automation} skills={automationSkills} delay={0.2} isInView={isInView} />
         </div>
       </div>
     </section>

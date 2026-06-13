@@ -1,7 +1,9 @@
 import { useRef } from 'react'
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion'
+import { useLanguage } from '../context/LanguageContext'
 
 export default function Hero() {
+  const { t } = useLanguage()
   const containerRef = useRef(null)
   const prefersReduced = useReducedMotion()
 
@@ -14,7 +16,7 @@ export default function Hero() {
   const headingScale = useTransform(scrollYProgress, [0, 1], prefersReduced ? [1, 1] : [1, 0.89])
   const labelOpacity = useTransform(scrollYProgress, [0, 1], prefersReduced ? [1, 1] : [1, 0])
 
-  const dur = (t) => (prefersReduced ? 0 : t)
+  const dur = (n) => (prefersReduced ? 0 : n)
 
   return (
     <section
@@ -63,8 +65,8 @@ export default function Hero() {
           transition={{ duration: dur(0.8), delay: dur(0.6), ease: [0.16, 1, 0.3, 1] }}
           style={{ fontFamily: 'Inter, sans-serif', fontWeight: 300, fontSize: '1.25rem', color: 'rgba(255,255,255,0.7)', maxWidth: '42rem', margin: '3rem auto 2rem', letterSpacing: '-0.01em', lineHeight: 1.6 }}
         >
-          Building modern web experiences and intelligent workflows.{' '}
-          <span style={{ color: 'rgba(255,255,255,0.35)' }}>Make.com · n8n · Claude AI · MCP Server</span>
+          {t.hero.description}{' '}
+          <span style={{ color: 'rgba(255,255,255,0.35)' }}>{t.hero.descriptionSub}</span>
         </motion.p>
 
         {/* CTAs */}
@@ -79,7 +81,7 @@ export default function Hero() {
             onClick={() => document.querySelector('#projects')?.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth' })}
             style={{ fontFamily: 'Inter, sans-serif', fontWeight: 500, fontSize: '1rem', color: '#fff', background: 'none', border: 'none', cursor: 'pointer', letterSpacing: '-0.01em', textDecoration: 'underline', textUnderlineOffset: '4px', transition: 'opacity 0.2s ease' }}
           >
-            View Work ↓
+            {t.hero.viewWork}
           </motion.button>
           <motion.a
             whileHover={prefersReduced ? {} : { opacity: 0.7 }}
