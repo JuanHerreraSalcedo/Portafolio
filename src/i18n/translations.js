@@ -70,6 +70,11 @@ export const translations = {
             'Servidor MCP en TypeScript que expone el Competitive Edge Blueprint de Groundwork a cualquier cliente compatible — Claude Desktop, Cursor y Morgan PM Engine. Implementa patrón async de 3 herramientas (run → status → result), cola de jobs con máximo 3 ejecuciones concurrentes, caché de resultados de 72h en Redis, transportes SSE + stdio y autenticación por API key por cliente.',
         },
         {
+          title: 'Sales Intel Reports',
+          description:
+            'Landing page orientada a ventas desarrollada en WordPress para Sales Intel Reports. Diseño enfocado en conversión, optimización de rendimiento y SEO. El sitio ayuda a equipos de ventas con IA a llegar a cada llamada con los puntos de dolor del prospecto, análisis de competidores y proyecciones de ROI.',
+        },
+        {
           title: 'Minijuego en JavaScript',
           description:
             'Juego de navegador donde los jugadores coleccionan objetos antes de que se acabe el tiempo. Desarrollado con JS puro enfocado en la lógica del juego y la experiencia de usuario.',
@@ -205,6 +210,11 @@ export const translations = {
           title: 'Competitive Edge Blueprint — MCP Server',
           description:
             "Built an MCP server in TypeScript that exposes Groundwork's Competitive Edge Blueprint to any MCP-compatible client — Claude Desktop, Cursor, and Morgan PM Engine. Implements a 3-tool async pattern (run → status → result), job queue with max 3 concurrent runs, 72h result cache in Redis, SSE + stdio transports, and per-client API key auth.",
+        },
+        {
+          title: 'Sales Intel Reports',
+          description:
+            "Sales-focused landing page built in WordPress for Sales Intel Reports. Conversion-focused design, performance optimization, and SEO. The site helps AI sales teams walk into every call armed with prospect pain points, competitor analysis, and ROI projections.",
         },
         {
           title: 'JS Mini Game',
